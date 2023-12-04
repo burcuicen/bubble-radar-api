@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "dev": "node src/index.js",
+    "build": "echo 'No build step required'"
   },  
   "author": "",
   "license": "ISC",

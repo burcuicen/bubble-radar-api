@@ -21,6 +21,8 @@ const { getAllCompletions } = require('./services/completion-service')
 const { getAllFanarts } = require('./services/fanart-service')
 const { getAllPopularKeywords } = require('./services/popular-keyword-service')
 const { getAllProducts } = require('./services/product-service')
+const NicheSearchService = require('./services/niche-search-service');
+
 
 
 // Connect to MongoDB
@@ -78,6 +80,52 @@ app.get('/products', async (req, res) => {
       res.status(500).send(error.message)
   }
 })
+// NicheSearch Routes
+app.post('/my-niche-search', async (req, res) => {
+  try {
+      const result = await NicheSearchService.create(req.body);
+      res.status(201).json(result);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
+app.get('/my-niche-search', async (req, res) => {
+  try {
+      const result = await NicheSearchService.getAll();
+      res.json(result);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
+app.get('/my-niche-search/:id', async (req, res) => {
+  try {
+      const result = await NicheSearchService.getById(req.params.id);
+      res.json(result);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
+app.put('/my-niche-search/:id', async (req, res) => {
+  try {
+      const result = await NicheSearchService.updateById(req.params.id, req.body);
+      res.json(result);
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
+app.delete('/my-niche-search/:id', async (req, res) => {
+  try {
+      await NicheSearchService.deleteById(req.params.id);
+      res.status(204).send();
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+});
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
